@@ -5,9 +5,13 @@ import java.util.*;
 public class StudentEnrolmentManager implements Manager {
     private static StudentEnrolmentManager single_instance = null;
     private List<StudentEnrolment> studentEnrolmentsList;
+    private List<Student> studentList;
+    private List<Course> courseList;
 
     public StudentEnrolmentManager() {
         this.studentEnrolmentsList = new ArrayList<StudentEnrolment>();
+        this.studentList = new ArrayList<Student>();
+        this.courseList = new ArrayList<Course>();
     }
     public static StudentEnrolmentManager getInstance()
     {
