@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentEnrolmentManagerTest {
-    dataObjectFactory data = new dataObjectFactory();
     Student student =new Student("s3836387","Ngo Quang khai", LocalDate.parse("2000-12-02"));
     Course course =new Course("COSC2440","Software Architecture Design and Implementation",12);
     StudentEnrolmentManager manager = new StudentEnrolmentManager();

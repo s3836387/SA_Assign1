@@ -34,8 +34,8 @@ public class Console {
     }
 
     //validate name
-    public static String validateName(String prompt) {
-        String result = prompt;//scanner.nextLine();
+    public static String validateName() {
+        String result = scanner.nextLine();
         while (!result.matches("^[a-zA-Z\\s]+")) {
             System.out.print("Please don't use special character in name");
             result = scanner.nextLine();
