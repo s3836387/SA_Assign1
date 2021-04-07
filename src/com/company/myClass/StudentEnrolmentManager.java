@@ -7,6 +7,7 @@ public class StudentEnrolmentManager implements Manager {
     private List<StudentEnrolment> studentEnrolmentsList;
     private List<Student> studentList;
     private List<Course> courseList;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public StudentEnrolmentManager() {
         this.studentEnrolmentsList = new ArrayList<StudentEnrolment>();
@@ -21,14 +22,56 @@ public class StudentEnrolmentManager implements Manager {
         return single_instance;
     }
 
-    @Override
-    public boolean add() {
-
-        return false;
+    // Get Student from student list
+    public Student getStudent(String id){
+        for (Student s: this.studentList ) {
+            if (s.getId().equalsIgnoreCase(id)){
+                return s;
+            }
+        }
+        return null;
+    }
+    // Get Course from student list
+    public Course getCourse(String id){
+        for (Course c: this.courseList ) {
+            if (c.getId().equalsIgnoreCase(id)){
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override
-    public boolean update() {
+    public boolean add(Student student, Course course, String sem) {
+        StudentEnrolment enrolment = new StudentEnrolment(student,course,sem);
+        for (StudentEnrolment e: this.studentEnrolmentsList) {
+            if (e.Equal(enrolment)){
+                System.out.println("Enrolment already exist.");
+                return false;
+            }
+        }
+        studentEnrolmentsList.add(enrolment);
+        return true;
+    }
+
+    @Override
+    public boolean update(StudentEnrolment enrolment, int choice) {
+        boolean isVal = false;
+        switch (choice){
+            case (1):
+                String newId = "";
+                while(!isVal){
+                    System.out.println("Enter new student ID: ");
+                    newId= scanner.next();
+                    isVal = (getStudent(newId) != null);
+                }
+                enrolment.setStudent(getStudent(newId));
+                break;
+            case (2):
+                break;
+            case(3):
+                break;
+        }
         return false;
     }
 
@@ -38,12 +81,12 @@ public class StudentEnrolmentManager implements Manager {
     }
 
     @Override
-    public Object getOne() {
+    public StudentEnrolment getOne() {
         return null;
     }
 
     @Override
-    public Object getAll() {
+    public StudentEnrolment[] getAll() {
         return null;
     }
 }

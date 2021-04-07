@@ -1,9 +1,9 @@
 package com.company.myClass;
 
 public interface Manager {
-    public boolean add();
-    public boolean update();
-    public boolean delete();
-    public Object getOne();
-    public Object getAll();
+    boolean add(Student student, Course course, String sem);
+    boolean update(StudentEnrolment enrolment, int choice);
+    boolean delete();
+    StudentEnrolment getOne();
+    StudentEnrolment[] getAll();
 }

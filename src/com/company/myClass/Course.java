@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class Course extends dataObject {
     private int numCredit;
 
-    public Course() {
-        super();
+    public Course(String id, String name) {
+        super(id, name);
     }
 
     public Course(String id, String name, int numCredit) {

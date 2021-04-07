@@ -44,5 +44,13 @@ public class StudentEnrolment {
     public String getCourseId(){
         return this.course.getId();
     }
+    public boolean Equal(StudentEnrolment enrolment){
+        if((enrolment.getCourseId().equalsIgnoreCase(this.getCourseId()))
+                &&(enrolment.getStudentId().equalsIgnoreCase(this.getStudentId()))
+                &&(this.semester.equalsIgnoreCase(enrolment.getSemester()))){
+            return true;
+        }
+        return false;
+    }
 
 }

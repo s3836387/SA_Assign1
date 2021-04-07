@@ -4,8 +4,8 @@ import java.time.LocalDate;
 public class Student extends dataObject {
     private LocalDate birthdate;
 
-    public Student() {
-        super();
+    public Student(String id, String name) {
+        super(id,name);
     }
 
     public Student(String id, String name, LocalDate birthdate) {
@@ -21,4 +21,6 @@ public class Student extends dataObject {
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
+
+
 }
