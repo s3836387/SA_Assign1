@@ -1,5 +1,7 @@
 package com.company.myClass;
 
+import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class StudentEnrolmentManager implements Manager {
@@ -21,6 +23,37 @@ public class StudentEnrolmentManager implements Manager {
 
         return single_instance;
     }
+    // ------- Initialize file --------
+    public static boolean initFile(String filePath) throws IOException{
+        try {
+            File myObj = new File(filePath);
+            return myObj.createNewFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void populateData() throws IOException {
+        // Populate student list
+        BufferedReader csvReader = new BufferedReader(new FileReader("src/com/company/resource/students.csv"));
+        String row;
+        row = csvReader.readLine();
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            this.studentList.add(new Student(data[0],data[1],LocalDate.parse(data[2])));
+        }
+        csvReader.close();
+        // Pupulate course list
+        csvReader = new BufferedReader(new FileReader("src/com/company/resource/courses.csv"));
+        row = csvReader.readLine();
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            this.courseList.add(new Course(data[0],data[1],Integer.parseInt(data[2])));
+        }
+        csvReader.close();
+    }
 
     // Get Student from student list
     public Student getStudent(String id){
@@ -31,7 +64,8 @@ public class StudentEnrolmentManager implements Manager {
         }
         return null;
     }
-    // Get Course from student list
+
+    // Get Course from Course list
     public Course getCourse(String id){
         for (Course c: this.courseList ) {
             if (c.getId().equalsIgnoreCase(id)){
@@ -41,6 +75,15 @@ public class StudentEnrolmentManager implements Manager {
         return null;
     }
 
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    //-------------------CRUD--------------------------
     @Override
     public boolean add(Student student, Course course, String sem) {
         StudentEnrolment enrolment = new StudentEnrolment(student,course,sem);
@@ -53,7 +96,6 @@ public class StudentEnrolmentManager implements Manager {
         studentEnrolmentsList.add(enrolment);
         return true;
     }
-
     @Override
     public boolean update(StudentEnrolment enrolment, int choice) {
         boolean isVal = false;

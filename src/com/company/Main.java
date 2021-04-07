@@ -2,16 +2,15 @@ package com.company;
 
 import com.company.myClass.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
-
+import java.util.*;
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	// write your code here
-        Student student =new Student("s3836387","Ngo Quang khai", LocalDate.parse("2000-12-02"));
-        Course course =new Course("COSC2440","Software Architecture Design and Implementation",12);
         StudentEnrolmentManager manager = new StudentEnrolmentManager();
-
-
+        manager.populateData();
+        System.out.println(manager.getCourseList().get(4).toString());
     }
 }

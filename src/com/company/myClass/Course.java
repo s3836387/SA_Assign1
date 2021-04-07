@@ -21,4 +21,10 @@ public class Course extends dataObject {
     public void setNumCredit(int numCredit) {
         this.numCredit = numCredit;
     }
+
+    @Override
+    public String toString() {
+        return  this.getId() + ","+ this.getName()+
+                "," + numCredit ;
+    }
 }

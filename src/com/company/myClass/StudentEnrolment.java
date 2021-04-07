@@ -53,4 +53,10 @@ public class StudentEnrolment {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return  student.getId() +
+                "," + course.getId() +
+                "," + semester;
+    }
 }

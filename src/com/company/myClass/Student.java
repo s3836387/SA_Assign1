@@ -22,5 +22,10 @@ public class Student extends dataObject {
         this.birthdate = birthdate;
     }
 
-
+    @Override
+    public String toString() {
+        return  this.getId()+
+                ","+ this.getName()+
+                "," + birthdate;
+    }
 }
