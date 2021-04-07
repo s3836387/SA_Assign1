@@ -101,24 +101,8 @@ public class StudentEnrolmentManager implements Manager {
         return true;
     }
     @Override
-    public boolean update(StudentEnrolment enrolment, int choice) {
-        boolean isVal = false;
-        switch (choice){
-            case (1):
-                String newId = "";
-                while(!isVal){
-                    System.out.println("Enter new student ID: ");
-                    newId= scanner.next();
-                    isVal = (getStudent(newId) != null);
-                }
-                enrolment.setStudent(getStudent(newId));
-                break;
-            case (2):
-                break;
-            case(3):
-                break;
-        }
-        return false;
+    public void update(StudentEnrolment newEnrolment, int index) {
+       studentEnrolmentsList.set(index,newEnrolment);
     }
 
     @Override

@@ -20,41 +20,87 @@ public class Main {
         manager.add(manager.getStudentList().get(8), manager.getCourseList().get(4),"2020A" );
         manager.add(manager.getStudentList().get(5), manager.getCourseList().get(5),"2020B" );
         // --------Begin add --------
-//        System.out.print("Student id: ");
-//        String id = Console.validateStudentId(manager.getStudentList());
+        
+//        String id = Console.validateStudentId("Student id: ");
 //        while(true){
 //            if (manager.getStudent(id) != null){
 //                break;
 //            }else{
-//                id = Console.validateStudentId(manager.getStudentList());
+//                id = Console.validateStudentId("Student id does not exist. Please re-enter: ");
 //            }
 //        }
 //        Student s = manager.getStudent(id);
 //
 //        //Get course input
-//        System.out.print("Course id: ");
-//        String courseId = Console.validateCourseId();
+//        String courseId = Console.validateCourseId("Course id: ");
 //        while(true){
 //            if (manager.getCourse(courseId) != null){
 //                break;
 //            }else{
-//                System.out.print("Course id does not exist! Please re-enter. ");
-//                courseId = Console.validateCourseId();
+//                courseId = Console.validateCourseId("Course id does not exist! Please re-enter. ");
 //            }
 //        }
 //        Course c = manager.getCourse(courseId);
-//        System.out.print("Semester: ");
-//        String sem = Console.validateSem();
+//        String sem = Console.validateSem("Semester: ");
 //        if(manager.add(s,c,sem)){
 //            System.out.println("Enrolment successfully added.");
 //        }else{
 //            System.out.println("An error occur");
 //        }
-//
-        // --------End add --------
-        manager.getAll();
-        int selectEnrol = Console.validateInt("Enter index number to choose: ", 0, manager.getStudentEnrolmentsList().size()-1);
-        StudentEnrolment en = manager.getOne(selectEnrol);
 
+        // --------End add --------
+        // --------Begin update --------
+//        manager.getAll();
+//        int index = Console.validateInt("Enter index number to choose: ", 0, manager.getStudentEnrolmentsList().size()-1);
+//        StudentEnrolment enrolment = manager.getOne(index);
+//
+//        //int selection = Console.validateInt("1.UPDATE 2.DELETE 3.CANCEL: ", 1, 3);
+//        int selection;
+//        do {
+//            System.out.println("----------------");
+//            System.out.println("1.Student");
+//            System.out.println("2.Course");
+//            System.out.println("3.Semester");
+//            System.out.println("4.Save & Exit");
+//            System.out.println("----------------");
+//            System.out.println("NOTE: Remember to \"Save & Exit\" to update your file.");
+//
+//            selection = Console.validateInt("Type in one of the number to choose the field you want to modify: ", 1, 4);
+//            String temp;
+//            switch (selection) {
+//                case 1 -> {
+//                     id = Console.validateStudentId("Enter new student id: ");
+//                    while(true){
+//                        if (manager.getStudent(id) != null){
+//                            break;
+//                        }else{
+//                            id = Console.validateStudentId("Student id does not exist. Please re-enter.");
+//                        }
+//                    }
+//                    enrolment.setStudent(manager.getStudent(id));
+//                }
+//                case 2 -> {
+//                    courseId = Console.validateCourseId("Enter new course id: ");
+//                    while(true){
+//                        if (manager.getCourse(courseId) != null){
+//                            break;
+//                        }else{
+//                            courseId = Console.validateCourseId("Course id does not exist! Please re-enter. ");
+//                        }
+//                    }
+//                    enrolment.setCourse(manager.getCourse(courseId));
+//                }
+//                case 3 -> {
+//                    sem = Console.validateSem("Enter new semester: ");
+//                    enrolment.setSemester(sem);
+//                }
+//                default -> {
+//                }
+//            }
+//        } while (selection != 4);
+//        manager.update(enrolment,index);
+//        manager.getAll();
+        //--------End update --------
     }
+
 }
