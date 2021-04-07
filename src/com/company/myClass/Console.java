@@ -32,6 +32,24 @@ public class Console {
         input = scanner.nextInt();
         return input;
     }
+    //check if the input is integer and is in range
+    public static int validateInt(String prompt, int min, int max) {
+        int input;
+        System.out.print(prompt);
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.print("Please enter a number: ");
+                scanner.next();
+            }
+            input = scanner.nextInt();
+            if (((input < min) || (input > max))){
+                System.out.print("Index out of range. Please re-enter: ");
+            }else{
+                break;
+            }
+        } while (true);
+        return input;
+    }
 
     //validate name
     public static String validateName() {
@@ -43,10 +61,19 @@ public class Console {
         return result;
     }
     //validate Student Id
-    public static String validateStudentId(String prompt) {
+    public static String validateStudentId(List<Student> students) {
         String result = scanner.nextLine();
         while (!result.matches("^(s|S)[0-9]{7}")) {
             System.out.print("Invalid student ID.(e.g s3836387)");
+            result = scanner.nextLine();
+        }
+
+        return result;
+    }
+    public static String validateCourseId() {
+        String result = scanner.nextLine();
+        while (!result.matches("^[a-zA-Z]{4}[0-9]{4}")) {
+            System.out.print("Invalid course ID.(e.g COSC2440)");
             result = scanner.nextLine();
         }
         return result;

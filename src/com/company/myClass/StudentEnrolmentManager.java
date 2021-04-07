@@ -83,6 +83,10 @@ public class StudentEnrolmentManager implements Manager {
         return courseList;
     }
 
+    public List<StudentEnrolment> getStudentEnrolmentsList() {
+        return studentEnrolmentsList;
+    }
+
     //-------------------CRUD--------------------------
     @Override
     public boolean add(Student student, Course course, String sem) {
@@ -123,12 +127,16 @@ public class StudentEnrolmentManager implements Manager {
     }
 
     @Override
-    public StudentEnrolment getOne() {
-        return null;
+    public StudentEnrolment getOne(int index) {
+        return studentEnrolmentsList.get(index);
     }
 
     @Override
-    public StudentEnrolment[] getAll() {
-        return null;
+    public void getAll() {
+        System.out.format("%10s%20s%15s%15s\n","ID","Student ID", "Course ID","Semester");
+        for (StudentEnrolment enrolment: studentEnrolmentsList){
+            System.out.format("%10d%20s%15s%15s\n",studentEnrolmentsList.indexOf(enrolment),enrolment.getStudentId(), enrolment.getCourseId(),enrolment.getSemester());
+        }
+
     }
 }
