@@ -5,17 +5,18 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class StudentEnrolmentManager implements Manager {
-    private static StudentEnrolmentManager single_instance = null;
+    private static StudentEnrolmentManager single_instance;
     private List<StudentEnrolment> studentEnrolmentsList;
     private List<Student> studentList;
     private List<Course> courseList;
-    private static final Scanner scanner = new Scanner(System.in);
 
-    public StudentEnrolmentManager() {
+
+    private StudentEnrolmentManager() {
         this.studentEnrolmentsList = new ArrayList<StudentEnrolment>();
         this.studentList = new ArrayList<Student>();
         this.courseList = new ArrayList<Course>();
     }
+
     public static StudentEnrolmentManager getInstance()
     {
         if (single_instance == null)
@@ -101,8 +102,13 @@ public class StudentEnrolmentManager implements Manager {
         return true;
     }
     @Override
-    public void update(StudentEnrolment newEnrolment, int index) {
-       studentEnrolmentsList.set(index,newEnrolment);
+    public void update(StudentEnrolment newEnrolment) {
+        for (StudentEnrolment e: this.studentEnrolmentsList) {
+            if (e.equals(newEnrolment)){
+                studentEnrolmentsList.set(studentEnrolmentsList.indexOf(e),newEnrolment);
+            }
+        }
+
     }
 
     @Override
@@ -117,10 +123,20 @@ public class StudentEnrolmentManager implements Manager {
 
     @Override
     public void getAll() {
-        System.out.format("%10s%20s%15s%15s\n","ID","Student ID", "Course ID","Semester");
+        System.out.format("%10s%15s%20s%15s%12s%35s%10s%10s\n","Index","Student ID","Student name","DOB", "Course ID","Course name","Credit","Semester");
         for (StudentEnrolment enrolment: studentEnrolmentsList){
-            System.out.format("%10d%20s%15s%15s\n",studentEnrolmentsList.indexOf(enrolment),enrolment.getStudentId(), enrolment.getCourseId(),enrolment.getSemester());
+            System.out.format("%10s%15s%20s%15s%12s%35s%10s%10s\n",studentEnrolmentsList.indexOf(enrolment),enrolment.getStudentId(),enrolment.getStudent().getName(),enrolment.getStudent().getBirthdate(), enrolment.getCourseId(),enrolment.getCourse().getName(),enrolment.getCourse().getNumCredit(),enrolment.getSemester());
         }
 
+    }
+
+    public List<StudentEnrolment> getEnrolmentbyStudent(String id){
+        List<StudentEnrolment> newList = new ArrayList<>();
+        for (StudentEnrolment en: this.studentEnrolmentsList) {
+            if(en.getStudentId().equalsIgnoreCase(id)){
+                newList.add(en);
+            }
+        }
+        return newList;
     }
 }
