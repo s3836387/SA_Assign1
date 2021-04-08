@@ -5,7 +5,7 @@ import java.util.List;
 public interface Manager {
     boolean add(Student student, Course course, String sem);
     void update(StudentEnrolment newEnrolment);
-    boolean delete();
+    void delete(StudentEnrolment newEnrolment);
     StudentEnrolment getOne(int index);
     void getAll();
 }

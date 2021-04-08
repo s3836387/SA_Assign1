@@ -2,6 +2,7 @@ package com.company.myClass;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StudentEnrolmentManager implements Manager {
@@ -24,8 +25,8 @@ public class StudentEnrolmentManager implements Manager {
 
         return single_instance;
     }
-    // ------- Initialize file --------
-    public static boolean initFile(String filePath) throws IOException{
+    // ------- File Process Methods --------
+    public static boolean createFile(String filePath) throws IOException{
         try {
             File myObj = new File(filePath);
             return myObj.createNewFile();
@@ -34,6 +35,20 @@ public class StudentEnrolmentManager implements Manager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void writeFile(List<StudentEnrolment> list, String filePath) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter(filePath, false));
+        for (StudentEnrolment row : list) {
+            pw.print(row.toString());
+            pw.println();
+        }
+        pw.close();
+    }
+
+    public static boolean checkFile(String filePath){
+        File myObj = new File(filePath);
+        return myObj.exists();
     }
 
     public void populateData() throws IOException {
@@ -46,7 +61,7 @@ public class StudentEnrolmentManager implements Manager {
             this.studentList.add(new Student(data[0],data[1],LocalDate.parse(data[2])));
         }
         csvReader.close();
-        // Pupulate course list
+        // Populate course list
         csvReader = new BufferedReader(new FileReader("src/com/company/resource/courses.csv"));
         row = csvReader.readLine();
         while ((row = csvReader.readLine()) != null) {
@@ -54,7 +69,39 @@ public class StudentEnrolmentManager implements Manager {
             this.courseList.add(new Course(data[0],data[1],Integer.parseInt(data[2])));
         }
         csvReader.close();
+        // Populate course list
+        csvReader = new BufferedReader(new FileReader("src/com/company/resource/default.csv"));
+        row = csvReader.readLine();
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            this.studentEnrolmentsList.add(new StudentEnrolment((new Student(data[0],data[1],LocalDate.parse(data[2]))),(new Course(data[3],data[4],Integer.parseInt(data[5]))),data[6]));
+        }
+        csvReader.close();
     }
+
+    public void populateData(String filePath) throws IOException {
+        // Populate student list
+        BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
+        String row;
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        row = csvReader.readLine();
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            this.studentEnrolmentsList.add(new StudentEnrolment((new Student(data[0],data[1],LocalDate.parse(data[2]))),(new Course(data[3],data[4],Integer.parseInt(data[5]))),data[6]));
+        }
+        csvReader.close();
+        Collections.sort(this.studentEnrolmentsList);
+        for (StudentEnrolment e: this.studentEnrolmentsList) {
+            if(this.getStudent(e.getStudentId()) == null){
+                this.studentList.add(e.getStudent());
+            }
+            if(this.getCourse(e.getCourseId()) == null){
+                this.courseList.add(e.getCourse());
+            }
+        }
+    }
+
+    // ------- File Process Methods --------
 
     // Get Student from student list
     public Student getStudent(String id){
@@ -103,17 +150,17 @@ public class StudentEnrolmentManager implements Manager {
     }
     @Override
     public void update(StudentEnrolment newEnrolment) {
-        for (StudentEnrolment e: this.studentEnrolmentsList) {
-            if (e.equals(newEnrolment)){
-                studentEnrolmentsList.set(studentEnrolmentsList.indexOf(e),newEnrolment);
-            }
-        }
-
+    //        for (StudentEnrolment e: this.studentEnrolmentsList) {
+    //            if (e.equals(newEnrolment)){
+    //                studentEnrolmentsList.set(studentEnrolmentsList.indexOf(e),newEnrolment);
+    //            }
+    //        }
+        studentEnrolmentsList.set(studentEnrolmentsList.indexOf(newEnrolment),newEnrolment);
     }
 
     @Override
-    public boolean delete() {
-        return false;
+    public void delete(StudentEnrolment newEnrolment) {
+        studentEnrolmentsList.remove(newEnrolment);
     }
 
     @Override
@@ -130,10 +177,10 @@ public class StudentEnrolmentManager implements Manager {
 
     }
 
-    public List<StudentEnrolment> getEnrolmentbyStudent(String id){
+    public List<StudentEnrolment> getStudentEnrolmentBySem(String id, String sem){
         List<StudentEnrolment> newList = new ArrayList<>();
         for (StudentEnrolment en: this.studentEnrolmentsList) {
-            if(en.getStudentId().equalsIgnoreCase(id)){
+            if((en.getStudentId().equalsIgnoreCase(id))&&(en.getSemester().equalsIgnoreCase(sem))){
                 newList.add(en);
             }
         }

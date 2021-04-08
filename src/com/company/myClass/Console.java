@@ -10,10 +10,11 @@ public class Console {
     private static final Scanner scanner = new Scanner(System.in);
     private Console() {}
 
-    public String charIn(String prompt) {
+    public static String stringIn(String prompt) {
         System.out.print(prompt);
         return scanner.next();
     }
+
 
     public int intIn(String prompt) {
         System.out.print(prompt);

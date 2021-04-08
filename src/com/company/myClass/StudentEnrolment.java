@@ -3,7 +3,7 @@ package com.company.myClass;
 import com.company.myClass.Course;
 import com.company.myClass.Student;
 
-public class StudentEnrolment {
+public class StudentEnrolment implements Comparable<StudentEnrolment> {
     private Student student;
     private Course course;
     private String semester;
@@ -55,8 +55,13 @@ public class StudentEnrolment {
 
     @Override
     public String toString() {
-        return  student.getId() +
-                "," + course.getId() +
-                "," + semester;
+        return  this.student.getId()+"," +this.student.getName()+"," +this.student.getBirthdate()+
+                "," + this.course.getId() +"," + this.course.getName() +"," + this.course.getNumCredit() +
+                "," + this.semester;
+    }
+
+    @Override
+    public int compareTo(StudentEnrolment o) {
+        return this.getStudentId().compareToIgnoreCase(o.getStudentId());
     }
 }
