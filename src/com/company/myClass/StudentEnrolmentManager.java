@@ -177,7 +177,7 @@ public class StudentEnrolmentManager implements Manager {
 
     }
 
-    public List<StudentEnrolment> getStudentEnrolmentBySem(String id, String sem){
+    public List<StudentEnrolment> getStudentEnrolmentByStudentIdNSem(String id, String sem){
         List<StudentEnrolment> newList = new ArrayList<>();
         for (StudentEnrolment en: this.studentEnrolmentsList) {
             if((en.getStudentId().equalsIgnoreCase(id))&&(en.getSemester().equalsIgnoreCase(sem))){
@@ -186,4 +186,25 @@ public class StudentEnrolmentManager implements Manager {
         }
         return newList;
     }
+
+    public List<StudentEnrolment> getStudentsEnrolmentByCourseNSem(String courseId,String sem){
+        List<StudentEnrolment> newList = new ArrayList<>();
+        for (StudentEnrolment en: this.studentEnrolmentsList) {
+            if((en.getCourseId().equalsIgnoreCase(courseId))&&(en.getSemester().equalsIgnoreCase(sem))){
+                newList.add(en);
+            }
+        }
+        return newList;
+    }
+
+    public List<StudentEnrolment> getStudentsEnrolmentBySem(String sem){
+        List<StudentEnrolment> newList = new ArrayList<>();
+        for (StudentEnrolment en: this.studentEnrolmentsList) {
+            if((en.getSemester().equalsIgnoreCase(sem))){
+                newList.add(en);
+            }
+        }
+        return newList;
+    }
+
 }
