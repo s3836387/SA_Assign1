@@ -36,6 +36,20 @@ public class Main {
         return courseId;
     }
 
+    public static void printAllStudent(){
+        StudentEnrolmentManager manager = StudentEnrolmentManager.getInstance();
+        System.out.format("%15s%20s%15s\n", "Student ID", "Student name", "DOB");
+        for (Student s : manager.getStudentList()) {
+            System.out.format("%15s%20s%15s\n", s.getId(), s.getName(), s.getBirthdate());
+        }
+    }
+    public static void printAllCourse(){
+        StudentEnrolmentManager manager = StudentEnrolmentManager.getInstance();
+        System.out.format("%15s%35s%15s\n", "Course ID", "Course name", "Credit");
+        for (Course c : manager.getCourseList()) {
+            System.out.format("%15s%35s%15d\n", c.getId(), c.getName(), c.getNumCredit());
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         StudentEnrolmentManager manager = StudentEnrolmentManager.getInstance();
@@ -62,7 +76,6 @@ public class Main {
                         filePath = Console.stringIn("Please re-enter (E.g: src/com/company/resource/default.csv): ");
                     }
                 }
-                manager.populateData(filePath);
                 break;
             case 2:
                 manager.populateData();
@@ -75,23 +88,22 @@ public class Main {
             System.out.println("----------------");
             System.out.println("1.Add new enrolment.");
             System.out.println("2.Select & Modify/Delete enrolment.");
-            System.out.println("3.Get all courses from student in 1 semester.");
+            System.out.println("3.Get all courses from a student in 1 semester.");
             System.out.println("4.Get all students of 1 course in 1 semester.");
             System.out.println("5.Get all courses offered in 1 semester.");
-            System.out.println("6.Exit");
+            System.out.println("6.Print All.");
+            System.out.println("7.Exit");
             System.out.println("----------------");
-            selection = Console.validateInt("Type in one of the number to choose what you want to do: ", 1, 6);
+            selection = Console.validateInt("Type in one of the number to choose what you want to do: ", 1, 7);
             switch (selection) {
                 case 1:
                     // --------Begin add --------
-                    System.out.format("%15s%20s%15s\n", "Student ID", "Student name", "DOB");
-                    for (Student s : manager.getStudentList()) {
-                        System.out.format("%15s%20s%15s\n", s.getId(), s.getName(), s.getBirthdate());
-                    }
+                    printAllStudent();
                     id = studentInput("Please enter student id: ");
                     Student s = manager.getStudent(id);
 
                     //Get course input
+                    printAllCourse();
                     courseId = courseInput("Course id: ");
                     Course c = manager.getCourse(courseId);
                     sem = Console.validateSem("Semester: ");
@@ -106,6 +118,7 @@ public class Main {
                     break;
                 case 2:
                     // --------Begin Select --------
+                    manager.getAll();
                     id = studentInput("Please enter a student id: ");
                     sem = Console.validateSem("Please enter the semester: ");
                     List<StudentEnrolment> StudentCourses = manager.getStudentEnrolmentByStudentIdNSem(id, sem);
@@ -175,6 +188,7 @@ public class Main {
                     //-------- End Modify menu ----------------
                     break;
                 case 3:
+                    printAllStudent();
                     id = studentInput("Please enter a student id: ");
                     sem = Console.validateSem("Please enter the semester: ");
                     List<StudentEnrolment> Studentcourses = manager.getStudentEnrolmentByStudentIdNSem(id, sem);
@@ -202,6 +216,7 @@ public class Main {
                     }
                     break;
                 case 4:
+                    printAllCourse();
                     courseId = courseInput("Please enter a course id: ");
                     sem = Console.validateSem("Please enter the semester: ");
                     List<StudentEnrolment> StudentsinCourse = manager.getStudentsEnrolmentByCourseNSem(courseId, sem);
@@ -264,11 +279,14 @@ public class Main {
                         }
                     }
                     break;
+                case 6:
+                    manager.getAll();
+                    break;
                 default:
                     break;
             }
 
-        } while (selection != 6);
+        } while (selection != 7);
 
     }
 

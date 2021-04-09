@@ -14,25 +14,7 @@ public class Console {
         System.out.print(prompt);
         return scanner.next();
     }
-
-
-    public int intIn(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextInt();
-    }
-
     //-------------- Input validation ------------------
-    //check if the input is integer
-    public static int validateInt(String prompt) {
-        System.out.print(prompt);
-        int input;
-        while (!scanner.hasNextInt()) {
-            System.out.print("Please input a number!");
-            scanner.next();
-        }
-        input = scanner.nextInt();
-        return input;
-    }
     //check if the input is integer and is in range
     public static int validateInt(String prompt, int min, int max) {
         int input;
@@ -52,23 +34,13 @@ public class Console {
         return input;
     }
 
-    //validate name
-    public static String validateName() {
-        String result = scanner.nextLine();
-        while (!result.matches("^[a-zA-Z\\s]+")) {
-            System.out.print("Please don't use special character in name");
-            result = scanner.nextLine();
-        }
-        return result;
-    }
-
     //validate Student Id
     public static String validateStudentId(String prompt) {
         System.out.println(prompt);
         String result = scanner.next();
         while (!result.matches("^(s|S)[0-9]{7}")) {
             System.out.print("Invalid student ID.(e.g s3836387)");
-            result = scanner.nextLine();
+            result = scanner.next();
         }
 
         return result;
@@ -77,9 +49,9 @@ public class Console {
     public static String validateCourseId(String prompt) {
         System.out.print(prompt);
         String result = scanner.next();
-        while (!result.matches("^[a-zA-Z]{4}[0-9]{4}")) {
+        while (!result.matches("^[a-zA-Z]{3,4}[0-9]{4}")) {
             System.out.print("Invalid course ID.(e.g COSC2440)");
-            result = scanner.nextLine();
+            result = scanner.next();
         }
         return result;
     }
@@ -104,32 +76,7 @@ public class Console {
         return result;
     }
 
-    //validate input date
-    public static String validateDateWithLimit(String prompt) {
-        String result = null;
-        // Parses the first date
-        LocalDate valDate;
-        // Parses the second date
-        LocalDate limitDate = LocalDate.parse("2015-01-01");
-        boolean isValid = false;
-        while (!isValid) {
-            try {
-                System.out.print(prompt);
-                result = scanner.next();
-                valDate = LocalDate.parse(result);
-                if (valDate.compareTo(limitDate)<0){
-                    isValid = true;
-                }else{
-                    System.out.println("Please input a valid date! (Before 2015-01-01)");
-                }
-            } catch (DateTimeParseException e) {
-                System.out.println("Wrong date format!(yyyy-mm-dd)");
-                isValid = false;
-            }
-        }
-        return result;
 
-    }
 
 
 

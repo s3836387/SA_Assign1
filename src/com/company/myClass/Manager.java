@@ -6,6 +6,6 @@ public interface Manager {
     boolean add(Student student, Course course, String sem);
     void update(StudentEnrolment newEnrolment);
     void delete(StudentEnrolment newEnrolment);
-    StudentEnrolment getOne(int index);
+    StudentEnrolment getOne(String studentId, String courseId, String sem);
     void getAll();
 }

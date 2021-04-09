@@ -71,7 +71,6 @@ public class StudentEnrolmentManager implements Manager {
         csvReader.close();
         // Populate course list
         csvReader = new BufferedReader(new FileReader("src/com/company/resource/default.csv"));
-        row = csvReader.readLine();
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
             this.studentEnrolmentsList.add(new StudentEnrolment((new Student(data[0],data[1],LocalDate.parse(data[2]))),(new Course(data[3],data[4],Integer.parseInt(data[5]))),data[6]));
@@ -84,7 +83,6 @@ public class StudentEnrolmentManager implements Manager {
         BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
         String row;
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/mm/yyyy");
-        row = csvReader.readLine();
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
             this.studentEnrolmentsList.add(new StudentEnrolment((new Student(data[0],data[1],LocalDate.parse(data[2]))),(new Course(data[3],data[4],Integer.parseInt(data[5]))),data[6]));
@@ -164,8 +162,13 @@ public class StudentEnrolmentManager implements Manager {
     }
 
     @Override
-    public StudentEnrolment getOne(int index) {
-        return studentEnrolmentsList.get(index);
+    public StudentEnrolment getOne(String studentId, String courseId, String sem) {
+        for (StudentEnrolment enrol: this.studentEnrolmentsList){
+            if ((enrol.getCourseId().equalsIgnoreCase(courseId))&&(enrol.getStudentId().equalsIgnoreCase(studentId))&&(enrol.getSemester().equalsIgnoreCase(sem))){
+                return enrol;
+            }
+        }
+        return null;
     }
 
     @Override
