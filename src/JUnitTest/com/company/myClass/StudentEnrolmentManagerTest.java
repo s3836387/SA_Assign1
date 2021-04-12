@@ -1,5 +1,7 @@
 package com.company.myClass;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,10 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StudentEnrolmentManagerTest {
     StudentEnrolmentManager manager = StudentEnrolmentManager.getInstance();
+
+    @AfterEach
+    void After() {
+        manager.getStudentList().clear();
+        manager.getCourseList().clear();
+        manager.getStudentEnrolmentsList().clear();
+    }
+
     @Test
     void createFile() throws IOException {
         assertFalse(StudentEnrolmentManager.createFile("src/com/company/resource/default.csv"));
         assertTrue(StudentEnrolmentManager.createFile("src/com/company/resource/default2.csv"));
+        // REMEMBER: Delete created default2.csv file in the src/com/company/resource/default2.csv
     }
 
     @Test
@@ -28,8 +39,8 @@ class StudentEnrolmentManagerTest {
 
     @Test
     void checkFile() throws IOException {
-        assertFalse(StudentEnrolmentManager.createFile("src/com/company/resource/default2.csv"));
-        assertTrue(StudentEnrolmentManager.createFile("src/com/company/resource/default.csv"));
+        assertFalse(StudentEnrolmentManager.checkFile("src/com/company/resource/something.csv"));
+        assertTrue(StudentEnrolmentManager.checkFile("src/com/company/resource/default.csv"));
     }
 
     @Test
@@ -64,7 +75,7 @@ class StudentEnrolmentManagerTest {
     @Test
     void testPopulateDataInvalid() throws IOException {
         assertThrows(FileNotFoundException.class, () -> {
-            manager.populateData("src/com/company/resource/default2.csv");
+            manager.populateData("src/com/company/resource/default3.csv");
         });
     }
 
