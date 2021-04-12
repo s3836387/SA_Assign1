@@ -2,7 +2,6 @@ package com.company.myClass;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StudentEnrolmentManager implements Manager {
@@ -147,13 +146,16 @@ public class StudentEnrolmentManager implements Manager {
         return true;
     }
     @Override
-    public void update(StudentEnrolment newEnrolment) {
-    //        for (StudentEnrolment e: this.studentEnrolmentsList) {
-    //            if (e.equals(newEnrolment)){
-    //                studentEnrolmentsList.set(studentEnrolmentsList.indexOf(e),newEnrolment);
-    //            }
-    //        }
-        studentEnrolmentsList.set(studentEnrolmentsList.indexOf(newEnrolment),newEnrolment);
+    public void update(StudentEnrolment newEnrolment, StudentEnrolment oldEnrolment) {
+        boolean isDup = false;
+        for (StudentEnrolment e: this.studentEnrolmentsList) {
+            if ((e.getStudentId().equalsIgnoreCase(newEnrolment.getStudentId()))&(e.getCourseId().equalsIgnoreCase(newEnrolment.getCourseId()))
+                    &(e.getSemester().equalsIgnoreCase(newEnrolment.getSemester()))){
+                isDup=true;
+            }
+        }
+        if(!isDup){studentEnrolmentsList.set(studentEnrolmentsList.indexOf(oldEnrolment),newEnrolment);}
+        else{ System.out.println("Update fail. Enrolment duplication.");}
     }
 
     @Override

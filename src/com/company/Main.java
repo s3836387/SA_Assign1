@@ -122,24 +122,23 @@ public class Main {
                     id = studentInput("Please enter a student id: ");
                     sem = Console.validateSem("Please enter the semester: ");
                     List<StudentEnrolment> StudentCourses = manager.getStudentEnrolmentByStudentIdNSem(id, sem);
-                    while (true) {
-                        if (!StudentCourses.isEmpty()) {
-                            // Print out all courses Student enrolled
-                            System.out.format("%10s%15s%20s%15s%12s%35s%10s%10s\n", "Index", "Student ID", "Student name", "DOB", "Course ID", "Course name", "Credit", "Semester");
-                            for (StudentEnrolment e : StudentCourses) {
-                                System.out.format("%10d%15s%20s%15s%12s%35s%10s%10s\n", StudentCourses.indexOf(e), e.getStudentId(), e.getStudent().getName(), e.getStudent().getBirthdate(), e.getCourseId(), e.getCourse().getName(), e.getCourse().getNumCredit(), e.getSemester());
-                            }
-                            break;
-                        } else {
-                            System.out.println("No courses found! Please try a different student or semester.");
-                            id = studentInput("Enter student id: ");
-                            sem = Console.validateSem("Enter the semester: ");
-                            StudentCourses = manager.getStudentEnrolmentByStudentIdNSem(id, sem);
-                        }
+                    while (StudentCourses.isEmpty()) {
+                        System.out.println("No courses found! Please try a different student or semester.");
+                        id = studentInput("Enter student id: ");
+                        sem = Console.validateSem("Enter the semester: ");
+                        StudentCourses = manager.getStudentEnrolmentByStudentIdNSem(id, sem);
+                    }
+                    // Print out all courses Student enrolled
+                    System.out.format("%10s%15s%20s%15s%12s%35s%10s%10s\n", "Index", "Student ID", "Student name", "DOB", "Course ID", "Course name", "Credit", "Semester");
+                    for (StudentEnrolment e : StudentCourses) {
+                        System.out.format("%10d%15s%20s%15s%12s%35s%10s%10s\n", StudentCourses.indexOf(e), e.getStudentId(), e.getStudent().getName(), e.getStudent().getBirthdate(), e.getCourseId(), e.getCourse().getName(), e.getCourse().getNumCredit(), e.getSemester());
                     }
 
-                    selection = Console.validateInt("Type in one of the number to choose the record you want to modify: ", 0, StudentCourses.size() - 1);
-                    StudentEnrolment enrolment = StudentCourses.get(selection);
+                    int oldIndex = Console.validateInt("Type in one of the number to choose the record you want to modify: ", 0, StudentCourses.size() - 1);
+
+                    // Make a deep copy of the selected object
+                    StudentEnrolment newEnrol = new StudentEnrolment(StudentCourses.get(oldIndex));
+
                     // --------End Select --------
                     // -------- Modify menu -------------------
                     selection = Console.validateInt("1.UPDATE 2.DELETE 3.DONE: ", 1, 3);
@@ -156,30 +155,33 @@ public class Main {
                                 System.out.println("NOTE: Remember to \"Save & Exit\" to update your file.");
 
                                 selection = Console.validateInt("Type in one of the number to choose the field you want to modify: ", 1, 4);
-                                String temp;
                                 switch (selection) {
                                     case 1 -> {
-                                        id = studentInput("Enter new student id: ");
-                                        enrolment.setStudent(manager.getStudent(id));
+                                        do{
+                                            id = studentInput("Enter new student id: ");
+                                        }while(manager.getStudent(id) == null);
+                                        newEnrol.setStudent(manager.getStudent(id));
                                     }
                                     case 2 -> {
-                                        courseId = courseInput("Enter new course id: ");
-                                        enrolment.setCourse(manager.getCourse(courseId));
+                                        do{
+                                            courseId = courseInput("Enter new course id: ");
+                                        }while(manager.getCourse(courseId)==null);
+                                        newEnrol.setCourse(manager.getCourse(courseId));
                                     }
                                     case 3 -> {
                                         sem = Console.validateSem("Enter new semester: ");
-                                        enrolment.setSemester(sem);
+                                        newEnrol.setSemester(sem);
                                     }
                                     default -> {
                                     }
                                 }
                             } while (selection != 4);
-                            manager.update(enrolment);
+                            manager.update(newEnrol,StudentCourses.get(oldIndex));
                             break;
                         //--------End update --------
                         case 2:
                             selection = Console.validateInt("Are your sure? 1/Y 2/N", 1, 2);
-                            manager.delete(enrolment);
+                            manager.delete(StudentCourses.get(oldIndex));
                             break;
                         default:
                             break;

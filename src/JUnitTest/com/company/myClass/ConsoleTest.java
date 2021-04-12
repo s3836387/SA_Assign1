@@ -9,25 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConsoleTest {
     InputStream sysInBackup = System.in;
     ByteArrayInputStream in;
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        System.out.println("Before class");
-    }
-
-    @BeforeEach
-    void setUp() throws Exception{
-        System.out.println("Before each method");
-    }
-
-    @AfterAll
-    static void afterAll() throws Exception{
-        System.out.println("After class");
-    }
-
-    @AfterEach
-    void tearDown() throws Exception{
-        System.out.println("After each method");
-    }
 
     @Test
     void stringIn() {
@@ -89,21 +70,6 @@ class ConsoleTest {
         assertEquals("2020A",Console.validateSem("Input."));
         System.setIn(sysInBackup);
     }
-    @Test
-    void validateSemInValid() {
-        // Test with invalid input. There is only 3 semester
-        in = new ByteArrayInputStream("2020D".getBytes());
-        System.setIn(in);
-        assertEquals("2020D",Console.validateSem("Input."));
-        System.setIn(sysInBackup);
-    }
-    @Test
-    void validateSemInvalidBefore2001() {
-        // Test with invalid input. Before the university was build
-        in = new ByteArrayInputStream("2001A".getBytes());
-        System.setIn(in);
-        assertEquals("2001A",Console.validateSem("Input."));
-        System.setIn(sysInBackup);
-    }
+
 
 }

@@ -8,6 +8,11 @@ public class StudentEnrolment implements Comparable<StudentEnrolment> {
     private Course course;
     private String semester;
 
+    public StudentEnrolment(StudentEnrolment enrolment) {
+        this.student = new Student(enrolment.getStudentId(),enrolment.student.getName(),enrolment.student.getBirthdate());
+        this.course = new Course(enrolment.getCourseId(),enrolment.course.getName(),enrolment.course.getNumCredit());
+        this.semester = enrolment.semester;
+    }
     public StudentEnrolment(Student student, Course course, String semester) {
         this.student = student;
         this.course = course;
