@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Run the test individually
 class ConsoleTest {
     InputStream sysInBackup = System.in;
     ByteArrayInputStream in;
